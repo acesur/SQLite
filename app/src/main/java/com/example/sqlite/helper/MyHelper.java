@@ -1,8 +1,10 @@
 package com.example.sqlite.helper;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.util.Log;
 
 public class MyHelper extends SQLiteOpenHelper {
 
@@ -30,6 +32,26 @@ public class MyHelper extends SQLiteOpenHelper {
                 ") ";
         db.execSQL(query);
     }
+
+   /* public boolean InsertData(String word, String meaning, SQLiteDatabase db){
+        try {
+            String query = "insert into Words(Word, Meaning) values('" + word +"','"+ meaning +"') ";
+            db.execSQL(query);
+            return true;
+        }
+        catch (Exception e){
+            Log.d("Error : ", e.toString());
+            return false;
+        }
+    }*/
+   public long InsertData(String word, String meaning, SQLiteDatabase db){
+       long id;
+       ContentValues contentValues = new ContentValues();
+       contentValues.put(Word, word);
+       contentValues.put(Meaning, meaning);
+       id = db.insert(tblWord, null, contentValues);
+       return id;
+   }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
